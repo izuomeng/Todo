@@ -17,9 +17,20 @@ const TodoList = ({todos, handleToggle, handleRemove}) => {
         </ul>
     )
 }
-
+const selectTodos = (todos, filter = 'All') => {
+    switch (filter) {
+        case 'All':
+            return todos
+        case 'Completed':
+            return todos.filter(v => v.completed)
+        case 'Uncompleted':
+            return todos.filter(v => !v.completed)
+        default:
+            return todos
+    }
+}
 const mapState = (state) => ({
-    todos: state.todos
+    todos: selectTodos(state.todos, state.filter)
 })
 const mapDispatch = {
     handleToggle: toggleTodo,
